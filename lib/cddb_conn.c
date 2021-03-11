@@ -118,8 +118,8 @@ cddb_conn_t *cddb_new(void)
         c->charset->cd_to_freedb = NULL;
         c->charset->cd_from_freedb = NULL;
 
-        c->srch.fields = SEARCH_ARTIST | SEARCH_TITLE;
-        c->srch.cats = SEARCH_ALL;
+        c->srch.fields = CDDB_SEARCH_ARTIST | CDDB_SEARCH_TITLE;
+        c->srch.cats = CDDB_SEARCH_ALL;
     } else {
         cddb_log_crit(cddb_error_str(CDDB_ERR_OUT_OF_MEMORY));
     }

@@ -1256,25 +1256,25 @@ static void cddb_search_param_str(cddb_search_params_t *params,
 
     /* XXX: to buffer overflow checking */
     strcpy(p, "&allfields="); p += 11;
-    if (params->fields == SEARCH_ALL) {
+    if (params->fields == CDDB_SEARCH_ALL) {
         strcpy(p, "YES"); p += 3;
     } else {
         strcpy(p, "NO"); p += 2;
-        if (params->fields & SEARCH_ARTIST) {
+        if (params->fields & CDDB_SEARCH_ARTIST) {
             strcpy(p, "&fields=artist"); p += 14;
         }
-        if (params->fields & SEARCH_TITLE) {
+        if (params->fields & CDDB_SEARCH_TITLE) {
             strcpy(p, "&fields=title"); p += 13;
         }
-        if (params->fields & SEARCH_TRACK) {
+        if (params->fields & CDDB_SEARCH_TRACK) {
             strcpy(p, "&fields=track"); p += 13;
         }
-        if (params->fields & SEARCH_OTHER) {
+        if (params->fields & CDDB_SEARCH_OTHER) {
             strcpy(p, "&fields=rest"); p += 12;
         }
     }
     strcpy(p, "&allcats="); p += 9;
-    if (params->cats == SEARCH_ALL) {
+    if (params->cats == CDDB_SEARCH_ALL) {
         strcpy(p, "YES"); p += 3;
     } else {
         strcpy(p, "NO"); p += 2;

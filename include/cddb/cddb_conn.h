@@ -60,12 +60,12 @@ typedef struct cddb_conn_s cddb_conn_t;
  * more of the constants below.
  */
 typedef enum {
-    SEARCH_NONE = 0,            /**< no fields */
-    SEARCH_ARTIST = 1,          /**< artist name field */
-    SEARCH_TITLE = 2,           /**< disc title field */
-    SEARCH_TRACK = 4,           /**< track title field */
-    SEARCH_OTHER = 8,           /**< other fields */
-    SEARCH_ALL = ~0,            /**< all fields */
+    CDDB_SEARCH_NONE = 0,            /**< no fields */
+    CDDB_SEARCH_ARTIST = 1,          /**< artist name field */
+    CDDB_SEARCH_TITLE = 2,           /**< disc title field */
+    CDDB_SEARCH_TRACK = 4,           /**< track title field */
+    CDDB_SEARCH_OTHER = 8,           /**< other fields */
+    CDDB_SEARCH_ALL = ~0,            /**< all fields */
 } cddb_search_t;
 
 /**
@@ -539,14 +539,14 @@ void cddb_search_set_fields(cddb_conn_t *c, unsigned int fields);
  * Set the bit-string specifying which categories to examine when
  * performing a text search.  The #SEARCHCAT macro needs to be used to
  * build the actual bit-string from individual categories.  The
- * #cddb_search_t values #SEARCH_NONE and #SEARCH_ALL are also valid.
+ * #cddb_search_t values #CDDB_SEARCH_NONE and #CDDB_SEARCH_ALL are also valid.
  * The example below shows some possible combinations.  By default all
  * categories are searched.
  *
  * @code
  * unsigned int cats = SEARCHCAT(CDDB_CAT_ROCK) | SEARCHCAT(CDDB_CAT_MISC);
- * unsigned int cats = SEARCH_ALL;
- * unsigned int cats = SEARCH_NONE;
+ * unsigned int cats = CDDB_SEARCH_ALL;
+ * unsigned int cats = CDDB_SEARCH_NONE;
  * @endcode
  *
  * @param c The connection structure.
