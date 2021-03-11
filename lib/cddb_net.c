@@ -228,7 +228,7 @@ int sock_vfprintf(cddb_conn_t *c, const char *format, va_list ap)
 
 /* Time-out enabled work-alikes */
 
-#ifdef HAVE_ALARM
+#if defined(HAVE_ALARM) && !defined(_WIN32)
 /* time-out jump buffer */
 static jmp_buf timeout_expired;
 
@@ -241,7 +241,7 @@ static void alarm_handler(int signum)
 
 struct hostent *timeout_gethostbyname(const char *hostname, int timeout)
 {
-#ifdef HAVE_ALARM
+#if defined(HAVE_ALARM) && !defined(_WIN32)
     struct hostent *he = NULL;
     struct sigaction action;
     struct sigaction old;
