@@ -55,44 +55,42 @@ static int cddb_regex_init_1(regex_t **p, const char *regex)
 
 void cddb_regex_init()
 {
-    int rv;
-
-    rv = cddb_regex_init_1(&REGEX_TRACK_FRAME_OFFSETS,
-                           "^#[[:blank:]]*Track frame offsets:[[:blank:]]*$");
-    rv = cddb_regex_init_1(&REGEX_TRACK_FRAME_OFFSET,
-                           "^#[[:blank:]]*([0-9]+)[[:blank:]]*$");
-    rv = cddb_regex_init_1(&REGEX_DISC_LENGTH,
-                           "^#[[:blank:]]*Disc length:[[:blank:]]+([0-9]+)( seconds)*[[:blank:]]*$");
-    rv = cddb_regex_init_1(&REGEX_DISC_REVISION,
-                           "^#[[:blank:]]*Revision:[[:blank:]]+([0-9]+)[[:blank:]]*$");
-    rv = cddb_regex_init_1(&REGEX_DISC_TITLE,
-                           "^DTITLE=((.*) / (.*)|(.*))$");
-    rv = cddb_regex_init_1(&REGEX_DISC_YEAR,
-                           "^DYEAR=([0-9]*)$");
-    rv = cddb_regex_init_1(&REGEX_DISC_GENRE,
-                           "^DGENRE=(.*)$");
-    rv = cddb_regex_init_1(&REGEX_DISC_EXT,
-                           "^EXTD=(.*)$");
-    rv = cddb_regex_init_1(&REGEX_TRACK_TITLE,
-                           "^TTITLE([0-9]+)=((.*) / (.*)|(.*))$");
-    rv = cddb_regex_init_1(&REGEX_TRACK_EXT,
-                           "^EXTT([0-9]+)=(.*)$");
-    rv = cddb_regex_init_1(&REGEX_PLAY_ORDER,
-                           "^PLAYORDER=(.*)$");
-    rv = cddb_regex_init_1(&REGEX_QUERY_MATCH,
-                           "^([[:alpha:]]+)[[:blank:]]([[:xdigit:]]+)[[:blank:]]((.*) / (.*)|(.*))$");
+    cddb_regex_init_1(&REGEX_TRACK_FRAME_OFFSETS,
+                      "^#[[:blank:]]*Track frame offsets:[[:blank:]]*$");
+    cddb_regex_init_1(&REGEX_TRACK_FRAME_OFFSET,
+                      "^#[[:blank:]]*([0-9]+)[[:blank:]]*$");
+    cddb_regex_init_1(&REGEX_DISC_LENGTH,
+                      "^#[[:blank:]]*Disc length:[[:blank:]]+([0-9]+)( seconds)*[[:blank:]]*$");
+    cddb_regex_init_1(&REGEX_DISC_REVISION,
+                      "^#[[:blank:]]*Revision:[[:blank:]]+([0-9]+)[[:blank:]]*$");
+    cddb_regex_init_1(&REGEX_DISC_TITLE,
+                      "^DTITLE=((.*) / (.*)|(.*))$");
+    cddb_regex_init_1(&REGEX_DISC_YEAR,
+                      "^DYEAR=([0-9]*)$");
+    cddb_regex_init_1(&REGEX_DISC_GENRE,
+                      "^DGENRE=(.*)$");
+    cddb_regex_init_1(&REGEX_DISC_EXT,
+                      "^EXTD=(.*)$");
+    cddb_regex_init_1(&REGEX_TRACK_TITLE,
+                      "^TTITLE([0-9]+)=((.*) / (.*)|(.*))$");
+    cddb_regex_init_1(&REGEX_TRACK_EXT,
+                      "^EXTT([0-9]+)=(.*)$");
+    cddb_regex_init_1(&REGEX_PLAY_ORDER,
+                      "^PLAYORDER=(.*)$");
+    cddb_regex_init_1(&REGEX_QUERY_MATCH,
+                      "^([[:alpha:]]+)[[:blank:]]([[:xdigit:]]+)[[:blank:]]((.*) / (.*)|(.*))$");
 
 	/* example: freedb.freedb.org cddbp 8880 - N000.00 W000.00 Random freedb server */
     /*          <server> <proto> <port> <query-url> <latitude> <longitude> <description> */
-    rv = cddb_regex_init_1(&REGEX_SITE,
-                           "^([[:graph:]]+)[[:blank:]]([[:alpha:]]+)[[:blank:]]([[:digit:]]+)[[:blank:]]([[:graph:]]+)[[:blank:]]([NS])([0-9.]+)[[:blank:]]([EW])([0-9.]+)[[:blank:]](.*)$");
+    cddb_regex_init_1(&REGEX_SITE,
+                      "^([[:graph:]]+)[[:blank:]]([[:alpha:]]+)[[:blank:]]([[:digit:]]+)[[:blank:]]([[:graph:]]+)[[:blank:]]([NS])([0-9.]+)[[:blank:]]([EW])([0-9.]+)[[:blank:]](.*)$");
 
     /* example: ...<a href="http://www.freedb.org/freedb_search_fmt.php?cat=rock&id=8e0eee0b">Massive Attack / Mezzanine</a>... */
     /*          ...<a href="http://www.freedb.org/freedb_search_fmt.php?cat=soundtrack&id=b30ed30b"><font size=-1>3</font></a>... */
     /*          <1:greedy_remains> <2:category> <3:discid> <6:artist> <7:title> <8:artist_title> <10:duplicate_number> */
-    rv = cddb_regex_init_1(&REGEX_TEXT_SEARCH,
-                           "^(.*)/freedb_search_fmt\\.php\\?cat=([[:alpha:]]+)&id=([[:xdigit:]]+)\">"
-                           "((([^<]+) / ([^<]+))|([^<]+)|([^>]*>([[:digit:]]+)<.*))</a>.*$");
+    cddb_regex_init_1(&REGEX_TEXT_SEARCH,
+                      "^(.*)/freedb_search_fmt\\.php\\?cat=([[:alpha:]]+)&id=([[:xdigit:]]+)\">"
+                      "((([^<]+) / ([^<]+))|([^<]+)|([^>]*>([[:digit:]]+)<.*))</a>.*$");
 }
 
 static inline void cddb_regfree(regex_t *regex) 
