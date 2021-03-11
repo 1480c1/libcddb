@@ -13,6 +13,7 @@ AC_CONFIG_FILES([Makefile              \
                  examples/Makefile     \
                  tests/Makefile        \
                  tests/settings.sh])
+AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([dist-bzip2])
 AM_MAINTAINER_MODE
 
