@@ -1,8 +1,8 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_PREREQ(2.55)
-AC_INIT(libcddb, 1.3.2)
+AC_PREREQ([2.69])
+AC_INIT([libcddb],[1.3.2])
 AC_CONFIG_SRCDIR(configure.ac)
-AM_CONFIG_HEADER(config.h)
+AC_CONFIG_HEADER(config.h)
 AC_CONFIG_FILES([Makefile              \
                  libcddb.pc            \
                  include/Makefile      \
@@ -21,13 +21,13 @@ LIBCDDB_VERSION_NUM=131
 AC_SUBST(LIBCDDB_VERSION_NUM)
 
 dnl iconv uses gettext macros (dependency on config.rpath)
+AM_GNU_GETTEXT()
 AM_GNU_GETTEXT_VERSION(0.14.4)
 
 dnl Process custom command-line options
 AC_ARG_ENABLE([loglevel],
-              AC_HELP_STRING([--enable-loglevel=LVL],
-                             [set default log level to one of debug, info, warn, ]
-                             [error, critical or none (default=warn)]),
+              AS_HELP_STRING([--enable-loglevel=LVL],[set default log level to one of debug, info, warn,
+                             error, critical or none (default=warn)]),
               default_loglevel=$enableval, default_loglevel=$enableval)
 if test x$default_loglevel = xdebug; then
     default_loglevel="CDDB_LOG_DEBUG"
@@ -50,13 +50,11 @@ if test x$default_loglevel != x; then
 fi
 
 AC_ARG_WITH([cdio],
-            AC_HELP_STRING([--without-cdio],
-                           [do not use libcdio functionality when building the ]
-                           [example program (default = use if found)]))
+            AS_HELP_STRING([--without-cdio],[do not use libcdio functionality when building the
+                           example program (default = use if found)]))
 AC_ARG_WITH([iconv],
-            AC_HELP_STRING([--without-iconv],
-                           [do not include character set conversion support using ]
-                           [the iconv library (default = enabled if found)]))
+            AS_HELP_STRING([--without-iconv],[do not include character set conversion support using
+                           the iconv library (default = enabled if found)]))
 
 dnl Check for target
 AC_CANONICAL_HOST
@@ -66,11 +64,11 @@ case $host in
         ;;
     *darwin*)
         AC_DEFINE([CDDB_NEED_UNISTD_H],1,
-        [Define if you have <unistd.h> and need it included. 
+        [Define if you have <unistd.h> and need it included.
          On MacOS, <regex.h> needs this but that header doesn't
          include it.])
         AC_DEFINE([CDDB_NEED_SYS_SOCKET_H],1,
-        [Define if you have <sys/socket.h> and need it included. 
+        [Define if you have <sys/socket.h> and need it included.
          On MacOS, <cddb_net.h> needs this but that header doesn't
          include it.])
         ;;
@@ -87,8 +85,8 @@ dnl Checks for programs.
 AC_PROG_AWK
 AC_PROG_CC
 AC_PROG_CPP
-AC_LIBTOOL_WIN32_DLL
-AC_PROG_LIBTOOL
+
+LT_INIT([win32-dll])
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
@@ -119,10 +117,10 @@ AC_CHECK_FUNC([gethostbyname], , AC_CHECK_LIB([nsl], [gethostbyname]))
 dnl Check for libcdio
 if test x$with_cdio != xno; then
     PKG_CHECK_MODULES(LIBCDIO, libcdio >= 0.76, [
-        HAVE_LIBCDIO=yes 
+        HAVE_LIBCDIO=yes
         AC_DEFINE(HAVE_LIBCDIO, [], [Define this if you have libcdio installed])
         ],
-        [AC_MSG_WARN(new enough libcdio not found. CD reading in CDDB test program disabled. Get libcdio from http://www.gnu.org/software/libcdio/) 
+        [AC_MSG_WARN(new enough libcdio not found. CD reading in CDDB test program disabled. Get libcdio from http://www.gnu.org/software/libcdio/)
         HAVE_LIBCDIO=no])
     AC_SUBST(LIBCDIO_LIBS)
     AC_SUBST(LIBCDIO_CFLAGS)
@@ -142,7 +140,7 @@ AC_SUBST(with_iconv)
 dnl Check and add some GCC specific warning flags
 dnl - we do this as the last thing so that a possible -Werror flag
 dnl - does not cause a failure in one of the other tests above
-if test "x$GCC" != "xyes" 
+if test "x$GCC" != "xyes"
 then
     echo "*** non GNU CC compiler detected."
     echo "*** This package has not been tested very well with non GNU compilers"
@@ -161,7 +159,7 @@ dnl MAINTAINER_CFLAGS="-Werror -O0"
             SAVE_CFLAGS="$CFLAGS"
             CFLAGS="$CFLAGS $MOPT"
             AC_MSG_CHECKING([whether $CC accepts $MOPT])
-            AC_TRY_COMPILE([], [], has_option=yes, has_option=no)
+            AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[]])],[has_option=yes],[has_option=no])
             CFLAGS="$SAVE_CFLAGS"
             AC_MSG_RESULT($has_option)
             if test "x$has_option" = "xyes"; then
@@ -182,7 +180,7 @@ dnl MAINTAINER_CFLAGS="-Werror -O0"
         SAVE_CFLAGS="$CFLAGS"
         CFLAGS="$CFLAGS $WOPT"
         AC_MSG_CHECKING([whether $CC accepts $WOPT])
-        AC_TRY_COMPILE([], [], has_option=yes, has_option=no)
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[]])],[has_option=yes],[has_option=no])
         CFLAGS="$SAVE_CFLAGS"
         AC_MSG_RESULT($has_option)
         if test "x$has_option" = "xyes"; then
