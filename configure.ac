@@ -2,7 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.69])
 AC_INIT([libcddb],[1.3.2])
 AC_CONFIG_SRCDIR(configure.ac)
-AC_CONFIG_HEADER(config.h)
+AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile              \
                  libcddb.pc            \
                  include/Makefile      \
@@ -15,13 +15,13 @@ AC_CONFIG_FILES([Makefile              \
                  tests/settings.sh])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([dist-bzip2])
-AM_MAINTAINER_MODE
+AM_MAINTAINER_MODE([enable])
 
 LIBCDDB_VERSION_NUM=131
 AC_SUBST(LIBCDDB_VERSION_NUM)
 
 dnl iconv uses gettext macros (dependency on config.rpath)
-AM_GNU_GETTEXT()
+AM_GNU_GETTEXT
 AM_GNU_GETTEXT_VERSION(0.14.4)
 
 dnl Process custom command-line options
@@ -96,8 +96,6 @@ AC_CHECK_LIB([socket], [connect])
 AC_CHECK_LIB([network], [connect])
 
 dnl Checks for header files.
-AC_HEADER_STDC
-AC_HEADER_TIME
 AC_CHECK_HEADERS([arpa/inet.h netdb.h netinet/in.h regex.h stdlib.h string.h sys/socket.h])
 AC_CHECK_HEADERS([unistd.h errno.h time.h sys/time.h fcntl.h windows.h winsock2.h])
 
